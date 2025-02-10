@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{tasks}}
+    <div>
+        <ol>
+            {% for task in tasks %}
+            <li><h1>{{task.title}}</h1>
+                <p>{{task.description}}</p>
+            </li>
+           
+            {% endfor %}
+        </ol>
+        <ol>
+            {% for tas in task2 %}
+            <li>{{tas}}</li>
+            {% endfor %}
+        </ol>
+        <ol>
+            {% for tas in task3 %}
+            <li>{{tas.status}}</li>
+            {% endfor %}
+        </ol>
+        <ol>
+            {% for tas in task4 %}
+            <li>{{tas.assigned_to}}</li>
+            {% endfor %}
+        </ol>
+        <ol>
+            {% for tas in task5 %}
+            <li>{{tas}}</li>
+            {% endfor %}
+        </ol>
+        <ul>
+            {% for tas in task6 %}
+            <li> 
+                {{tas.id}} <p>{{tas.status}}</p> 
+                <p>{{tas.description}}</p>
+                <p>{{tas.due_date}}</p>
+                <p>{{tas.is_completed}}</p>
+                <p>{{tas.assigned_to}}</p>
+                <p>{{task.priority}}</p>
+            </li>
+            
+            {% endfor %}
+        </ul>
+        <ol>
+            {% for tas in task7 %}
+            <li> 
+                 <p>{{tas.status}}</p> 
+                <p>{{tas.description}}</p>
+                <p>{{tas.due_date}}</p>
+                <p>{{tas.is_completed}}</p>
+                <p>{{tas.assigned_to}}</p>
+                <p>{{tas.priority}}</p>
+                <p>{{tas.task}}</p>
+            </li>
+            
+            {% endfor %}
+        </ol>
+       
+    </div>
+    <p>{{task8}}</p>
+    <ol>
+        {% for task in task9 %}
+        
+        <li>
+            <p>Name:{{task.name}}</p>
+            <p>Email:{{task.email}}</p>
+        
+        </li>
+        {% endfor %}
+        
+    </ol>
+   
+    
+</body>
+</html>

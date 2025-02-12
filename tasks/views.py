@@ -1,15 +1,31 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from tasks.forms import Task,TaskModelForm
-from tasks.models import employee,Task
-
+from tasks.models import Employee,Task,Project,TaskDetail
+from django.db.models import Q, Count, Max, Min, Avg,Sum
+from datetime import date
 def manager_dashboard(request):
-    return render(request,"dashboard/manager-dashboard.html")
+    tasks= Task.objects.all()
+    total_tasks = tasks.count()
+    completed_task = Task.objects.filter(status = "COMPLETED").count()
+    in_progress_task  = Task.objects.filter(status = "IN_PROGRESS").count()
+    pending_task = Task.objects.filter(status="PENDING").count()
+
+    counts = {
+        "tasks":tasks,
+        "total_task":total_tasks,
+        "completed_task":completed_task,
+        "in_progrss":in_progress_task,
+        "pending_task":pending_task
+
+    }
+    return render(request,"dashboard/manager-dashboard.html",counts)
+
+
 
 def user_dashboard(request):
     return render(request,"dashboard/user-dashboard.html")
-def sifat_page(request):
-    return HttpResponse("<h1>hello sifat how are you</h1>")
+
 def math_academy(request):
     names = ["sifat","siam","shihab","shibli"]
     count = 0
@@ -47,4 +63,36 @@ def creat_task(request):
             # return HttpResponse("Task added successfully")
     context = {"forms":form}
     return render(request,"task_form.html",context)
+def view_task(request):
+    task = Task.objects.all()
+    task1 = Project.objects.all()
+    task2 = Task.objects.filter(status="IN_PROGRESS")
+    today = date.today
+    task3= Task.objects.filter(due_date=date.today())
+    task4= TaskDetail.objects.all()
+    task4= TaskDetail.objects.filter(priority ="H")
+    task5=Task.objects.filter(title__icontains = "a",status = "PENDING")
+
+    task6=Task.objects.select_related('details').all()
+    task7 = TaskDetail.objects.select_related('task').all() 
+
+    task8 = Task.objects.aggregate(
+                                    total = Count('id'),
+                                    due_date = Max('due_date'),
+                                    
+                                   
+                                   )
+   
+
+    employees = Employee.objects.annotate(total_tasks=Count('tasks')).order_by('total_tasks')
+
+   
+ 
+   
+    return render(request,"show_task.html",{"tasks":task,"task1":task1,"task2":task2,"task3":task3,"task4":task4,"task5":task5,"task6":task6,"task7":task7,"task8":task8,"task9":employees})
+    
+
+
+
+
 

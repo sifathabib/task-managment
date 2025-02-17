@@ -12,14 +12,15 @@
   />
 </head>
 <body>
-    {% if massage %}
-        <p>{{massage}}</p>
+    {% if messages %}
+        <p>{{messages}}</p>
     {% endif %}
 
 
     <form method="POST">
         {% csrf_token %}
-        {{ forms.as_p }}
+        {{ task_form}}
+        {{ task_detail_form}}
         <button type="submit">Submit</button>
     </form>
 </body>
